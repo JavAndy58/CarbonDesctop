@@ -19,8 +19,8 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation(compose.desktop.currentOs)
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.7.2")
+    implementation("com.squareup.retrofit2:converter-gson:2.7.2")
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.4")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.6.10")
 

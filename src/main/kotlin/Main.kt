@@ -44,17 +44,10 @@ fun CarList(carApi: CarApi) {
     }
 }
 
-
-
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl("http://localhost:8080")
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//        val carApi = retrofit.create(CarApi::class.java)
 
-//        App()
+        App()
         if (carApi != null) {
             CarList(carApi)
         }
