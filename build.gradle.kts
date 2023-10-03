@@ -5,7 +5,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.6.10"
     id("org.jetbrains.compose") version "1.1.1"
-    kotlin("plugin.serialization") version "1.6.10"
 }
 
 group = "com.javandy"
@@ -20,10 +19,11 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation(compose.desktop.currentOs)
-    implementation("io.ktor:ktor-client-cio-jvm:2.3.2")
-    implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
-    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.4")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.6.10")
+
 }
 
 tasks.test {

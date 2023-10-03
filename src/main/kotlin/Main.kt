@@ -1,15 +1,18 @@
 // Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 import androidx.compose.material.MaterialTheme
 import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import data.model.Car
+import data.model.CarApi
+import data.model.carApi
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
 @Preview
@@ -25,8 +28,35 @@ fun App() {
     }
 }
 
+@Composable
+fun CarList(carApi: CarApi) {
+    val carsState = remember { mutableStateOf<List<Car>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        val cars = carApi.getCars()
+        carsState.value = cars
+    }
+
+    LazyColumn {
+        items(carsState.value) { car ->
+            Text(car.name)
+        }
+    }
+}
+
+
+
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
-        App()
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("http://localhost:8080")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//        val carApi = retrofit.create(CarApi::class.java)
+
+//        App()
+        if (carApi != null) {
+            CarList(carApi)
+        }
     }
 }
