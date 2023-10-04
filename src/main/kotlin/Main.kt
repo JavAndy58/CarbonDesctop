@@ -8,11 +8,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import data.model.Car
-import data.model.CarApi
-import data.model.carApi
+import model.Car
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import service.CarApi
+
 
 @Composable
 @Preview
@@ -29,12 +29,23 @@ fun App() {
 }
 
 @Composable
-fun CarList(carApi: CarApi) {
+fun CarList() {
+
+    val BASE_URL = "http://localhost:8080"
+    val retrofit: Retrofit? = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val carApi = retrofit?.create(CarApi::class.java)
+
     val carsState = remember { mutableStateOf<List<Car>>(emptyList()) }
 
     LaunchedEffect(Unit) {
-        val cars = carApi.getCars()
-        carsState.value = cars
+        val cars = carApi?.getCars()
+        if (cars != null) {
+            carsState.value = cars
+        }
     }
 
     LazyColumn {
@@ -48,8 +59,6 @@ fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
 
         App()
-        if (carApi != null) {
-            CarList(carApi)
-        }
+        CarList()
     }
 }
